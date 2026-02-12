@@ -21,6 +21,7 @@
             --warning: #ff9500;
             --danger: #ff3b30;
             --info: #007aff;
+            --bg: #f2f2f7;
         }
 
         html, body {
@@ -36,9 +37,9 @@
         .app-container {
             width: 100%;
             height: 100%;
-            max-width: 390px;
+            max-width: 430px;
             margin: 0 auto;
-            background: #f2f2f7;
+            background: var(--bg);
             position: relative;
             display: flex;
             flex-direction: column;
@@ -73,7 +74,7 @@
         }
 
         .login-logo {
-            font-size: 48px;
+            font-size: 56px;
             margin-bottom: 10px;
             animation: float 3s ease-in-out infinite;
             z-index: 10;
@@ -86,19 +87,21 @@
 
         .login-title {
             color: white;
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 30px;
             z-index: 10;
+            text-align: center;
         }
 
         .pin-container {
             background: rgba(255,255,255,0.98);
-            border-radius: 20px;
-            padding: 24px;
-            width: 280px;
+            border-radius: 24px;
+            padding: 28px;
+            width: 300px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .water-fill {
@@ -106,7 +109,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(180deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.4) 100%);
+            background: linear-gradient(180deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.5) 100%);
             transition: height 0.3s ease;
             height: 0%;
             z-index: 0;
@@ -114,19 +117,19 @@
 
         .pin-display {
             background: #f2f2f7;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
             text-align: center;
-            font-size: 28px;
-            letter-spacing: 12px;
+            font-size: 32px;
+            letter-spacing: 16px;
             font-weight: 700;
             color: #333;
-            height: 56px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid transparent;
+            border: 3px solid transparent;
             position: relative;
             z-index: 1;
         }
@@ -144,22 +147,20 @@
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
         .pin-keypad {
             display: grid;
-            grid-template-columns: repeat(3, 72px);
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-            justify-content: center;
             position: relative;
             z-index: 1;
         }
 
         .pin-btn {
-            width: 72px;
-            height: 72px;
+            aspect-ratio: 1;
             border: none;
             border-radius: 50%;
             background: #e5e5ea;
@@ -187,90 +188,108 @@
         .pin-btn.enter {
             background: var(--success);
             color: white;
-            font-size: 22px;
+            font-size: 24px;
         }
 
-        /* Main App - No Scroll */
+        /* Main App */
         .main-app {
             flex: 1;
-            display: flex;
+            display: none;
             flex-direction: column;
-            background: #f2f2f7;
+            background: var(--bg);
             height: 100%;
             overflow: hidden;
         }
 
-        /* Compact Header */
+        .main-app.active {
+            display: flex;
+        }
+
+        /* Header */
         .header {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             color: white;
-            padding: 44px 12px 10px;
+            padding: 50px 16px 12px;
             flex-shrink: 0;
+            position: relative;
         }
 
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
         }
 
         .header h1 {
-            font-size: 17px;
+            font-size: 20px;
             font-weight: 700;
         }
 
         .datetime {
-            font-size: 13px;
+            font-size: 14px;
             opacity: 0.9;
+            font-weight: 500;
         }
 
         .user-badge {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 8px;
+            font-size: 13px;
         }
 
         .role-badge {
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 6px;
-            background: rgba(255,255,255,0.3);
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.25);
             text-transform: uppercase;
             font-weight: 700;
         }
 
-        .add-person-btn {
-            position: absolute;
-            top: 44px;
-            right: 12px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: white;
+            margin: 8px 12px 0;
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
             border: none;
-            color: white;
-            font-size: 22px;
+            background: transparent;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            gap: 4px;
         }
 
-        .add-person-btn:active {
-            transform: scale(0.9);
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
         }
 
-        /* Quick Actions - Single Row */
+        /* Quick Actions */
         .quick-actions {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
             padding: 8px 12px;
             background: white;
-            margin: 6px 12px;
-            border-radius: 12px;
+            margin: 8px 12px;
+            border-radius: 16px;
             flex-shrink: 0;
         }
 
@@ -278,11 +297,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            padding: 6px 2px;
-            border-radius: 8px;
+            gap: 4px;
+            padding: 8px 2px;
+            border-radius: 12px;
             cursor: pointer;
-            border: 1.5px solid transparent;
+            border: 2px solid transparent;
+            transition: all 0.15s;
         }
 
         .action-btn:active {
@@ -295,7 +315,7 @@
         }
 
         .action-icon {
-            font-size: 22px;
+            font-size: 24px;
             line-height: 1;
         }
 
@@ -303,89 +323,151 @@
             font-size: 10px;
             font-weight: 600;
             color: #333;
+            text-align: center;
         }
 
-        /* Stats - Compact */
+        /* Stats Bar */
         .stats-bar {
             display: flex;
-            gap: 6px;
-            padding: 0 12px 6px;
+            gap: 8px;
+            padding: 0 12px 8px;
             flex-shrink: 0;
         }
 
         .stat-pill {
             flex: 1;
             background: white;
-            border-radius: 10px;
-            padding: 6px 8px;
+            border-radius: 12px;
+            padding: 8px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            gap: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .stat-dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
         }
 
         .stat-label {
             font-size: 9px;
             color: #666;
+            font-weight: 500;
         }
 
         .stat-num {
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
             color: #333;
         }
 
-        /* Personnel List - Compact Grid */
-        .personnel-section {
+        /* Content Area */
+        .content-area {
             flex: 1;
-            padding: 0 12px 70px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            position: relative;
         }
 
+        .tab-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 0 12px 80px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Personnel Section */
         .section-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             color: #8e8e93;
             text-transform: uppercase;
-            padding: 6px 4px 4px;
+            padding: 12px 4px 8px;
             display: flex;
             justify-content: space-between;
-            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .selection-hint {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .selection-hint.visible {
+            opacity: 1;
         }
 
         .person-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-            overflow-y: auto;
+            gap: 8px;
         }
 
         .person-card {
             background: white;
-            border-radius: 10px;
-            padding: 8px;
+            border-radius: 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .person-card:active {
+            transform: scale(0.98);
+        }
+
+        .person-card.selected {
+            border-color: var(--primary);
+            background: #f8f9ff;
+        }
+
+        .person-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .person-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .person-avatar {
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
@@ -393,18 +475,18 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 16px;
             flex-shrink: 0;
         }
 
-        .person-main-info {
+        .person-info {
             flex: 1;
             min-width: 0;
         }
 
         .person-name {
             font-weight: 600;
-            font-size: 12px;
+            font-size: 14px;
             color: #333;
             white-space: nowrap;
             overflow: hidden;
@@ -412,76 +494,154 @@
         }
 
         .person-time {
-            font-size: 10px;
+            font-size: 11px;
             color: #8e8e93;
+            font-weight: 500;
         }
 
         .status-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-size: 9px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 600;
             color: white;
+            align-self: flex-start;
         }
 
-        .select-check {
-            width: 20px;
-            height: 20px;
-            border: 1.5px solid #c7c7cc;
-            border-radius: 50%;
+        /* Statistics Tab */
+        .stats-container {
             display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 150px;
+            gap: 8px;
+            padding: 0 8px;
+        }
+
+        .chart-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 11px;
-            color: white;
-        }
-
-        .select-check.selected {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        /* Mini History */
-        .mini-history {
-            display: flex;
             gap: 6px;
-            font-size: 9px;
+        }
+
+        .chart-bar {
+            width: 100%;
+            max-width: 40px;
+            border-radius: 8px 8px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+            min-height: 4px;
+        }
+
+        .chart-bar-label {
+            font-size: 10px;
             color: #666;
-            flex-wrap: wrap;
+            font-weight: 600;
+            text-align: center;
         }
 
-        .mini-item {
+        .chart-value {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .timeline-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .timeline-item {
             display: flex;
-            align-items: center;
-            gap: 2px;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .mini-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 50px;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .timeline-status {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .timeline-duration {
+            font-size: 12px;
+            color: #8e8e93;
+            font-weight: 500;
         }
 
         /* Bottom Toolbar */
         .bottom-toolbar {
             position: fixed;
-            bottom: 8px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
+            display: none;
+            gap: 12px;
             z-index: 300;
-            background: rgba(255,255,255,0.95);
-            padding: 6px;
-            border-radius: 24px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.98);
+            padding: 8px;
+            border-radius: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .bottom-toolbar.visible {
+            display: flex;
         }
 
         .tool-btn {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             border: none;
             background: #f2f2f7;
@@ -490,10 +650,20 @@
             justify-content: center;
             font-size: 20px;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:active {
+            transform: scale(0.9);
         }
 
         .tool-btn.primary {
             background: var(--primary);
+            color: white;
+        }
+
+        .tool-btn.danger {
+            background: var(--danger);
             color: white;
         }
 
@@ -522,12 +692,12 @@
             right: 0;
             bottom: 0;
             background: white;
-            border-radius: 20px 20px 0 0;
-            padding: 16px;
+            border-radius: 24px 24px 0 0;
+            padding: 20px;
             transform: translateY(100%);
-            transition: transform 0.3s;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 500;
-            max-height: 60vh;
+            max-height: 70vh;
         }
 
         .bottom-sheet.active {
@@ -535,77 +705,94 @@
         }
 
         .sheet-handle {
-            width: 36px;
-            height: 4px;
+            width: 40px;
+            height: 5px;
             background: #c7c7cc;
-            border-radius: 2px;
-            margin: 0 auto 16px;
+            border-radius: 3px;
+            margin: 0 auto 20px;
         }
 
         .sheet-title {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             text-align: center;
+            color: #333;
         }
 
         .status-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
 
         .status-opt {
             aspect-ratio: 1;
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            font-size: 10px;
+            gap: 6px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .status-opt:active {
+            transform: scale(0.95);
         }
 
         .status-opt.selected {
             border-color: var(--primary);
+            transform: scale(1.05);
         }
 
         .status-opt .icon {
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .sheet-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #e5e5ea;
-            border-radius: 10px;
-            font-size: 15px;
-            margin-bottom: 10px;
+            padding: 14px;
+            border: 2px solid #e5e5ea;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .sheet-input:focus {
+            border-color: var(--primary);
         }
 
         .sheet-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 600;
+            cursor: pointer;
         }
 
-        /* Add Person Modal */
+        .sheet-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Full Modals */
         .modal-full {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: #f2f2f7;
+            background: var(--bg);
             z-index: 600;
             transform: translateY(100%);
             transition: transform 0.3s;
@@ -618,109 +805,143 @@
 
         .modal-header {
             background: white;
-            padding: 44px 12px 12px;
+            padding: 50px 16px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
             position: sticky;
             top: 0;
             z-index: 10;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .back-btn {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: #f2f2f7;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
+            cursor: pointer;
         }
 
         .modal-title {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 700;
+            color: #333;
         }
 
         .form-section {
-            padding: 16px;
+            padding: 20px;
             background: white;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .form-label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             color: #8e8e93;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: block;
         }
 
         .form-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #e5e5ea;
-            border-radius: 10px;
-            font-size: 15px;
-            margin-bottom: 10px;
+            padding: 14px;
+            border: 2px solid #e5e5ea;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
         }
 
         .save-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: var(--success);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 600;
+            cursor: pointer;
+        }
+
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e5e5ea;
+            border-radius: 12px;
+            background: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .role-btn.selected {
+            border-color: var(--primary);
+            background: #f0f4ff;
+            color: var(--primary);
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            top: 60px;
+            top: 70px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 14px;
             font-weight: 500;
             z-index: 2000;
             opacity: 0;
             transition: all 0.3s;
             pointer-events: none;
+            backdrop-filter: blur(10px);
         }
 
         .toast.show {
             opacity: 1;
-        }
-
-        /* Permission */
-        .editor-only, .admin-only {
-            display: none;
-        }
-
-        body[data-role="editor"] .editor-only,
-        body[data-role="admin"] .editor-only,
-        body[data-role="admin"] .admin-only {
-            display: flex;
-        }
-
-        body[data-role="reader"] .editor-only,
-        body[data-role="reader"] .admin-only,
-        body[data-role="reader"] .select-check,
-        body[data-role="reader"] .add-person-btn,
-        body[data-role="reader"] .bottom-toolbar {
-            display: none !important;
+            transform: translateX(-50%) translateY(0);
         }
 
         .hidden { display: none !important; }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8e8e93;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 15px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -754,7 +975,7 @@
     </div>
 
     <!-- Main App -->
-    <div class="main-app hidden" id="mainApp">
+    <div class="main-app" id="mainApp">
         <!-- Header -->
         <div class="header">
             <div class="header-top">
@@ -765,30 +986,46 @@
                 <span id="headerName">--</span>
                 <span class="role-badge" id="headerRole">--</span>
             </div>
-            <button class="add-person-btn editor-only admin-only" onclick="openAddPerson()">+</button>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav" id="tabNav">
+            <button class="tab-btn active" onclick="switchTab('personnel')">
+                <span>👥</span> Персонал
+            </button>
+            <button class="tab-btn" onclick="switchTab('stats')">
+                <span>📊</span> Статистика
+            </button>
+            <button class="tab-btn" onclick="switchTab('admin')">
+                <span>⚙️</span> Управління
+            </button>
         </div>
 
         <!-- Quick Actions -->
-        <div class="quick-actions">
-            <div class="action-btn" onclick="setMyStatus('in', '🏢 В приміщенні')">
+        <div class="quick-actions" id="quickActions">
+            <div class="action-btn" id="btn-in" onclick="applyQuickStatus('in', '🏢 В приміщенні')">
                 <span class="action-icon">🏢</span>
                 <span class="action-label">В приміщенні</span>
             </div>
-            <div class="action-btn" onclick="setMyStatus('vz', '📞 ВЗ')">
+            <div class="action-btn" id="btn-vz" onclick="applyQuickStatus('vz', '📞 ВЗ')">
                 <span class="action-icon">📞</span>
                 <span class="action-label">ВЗ</span>
             </div>
-            <div class="action-btn" onclick="setMyStatus('rz', '📋 РЗ')">
+            <div class="action-btn" id="btn-rz" onclick="applyQuickStatus('rz', '📋 РЗ')">
                 <span class="action-icon">📋</span>
                 <span class="action-label">РЗ</span>
             </div>
-            <div class="action-btn" onclick="setMyStatus('lunch', '🍽️ Обід')">
+            <div class="action-btn" id="btn-lunch" onclick="applyQuickStatus('lunch', '🍽️ Обід')">
                 <span class="action-icon">🍽️</span>
                 <span class="action-label">Обід</span>
             </div>
+            <div class="action-btn" id="btn-custom" onclick="openCustomStatus()">
+                <span class="action-icon">⚡</span>
+                <span class="action-label">Інше</span>
+            </div>
         </div>
 
-        <!-- Stats -->
+        <!-- Stats Bar -->
         <div class="stats-bar">
             <div class="stat-pill">
                 <div class="stat-dot" style="background: #333;"></div>
@@ -812,22 +1049,95 @@
             </div>
         </div>
 
-        <!-- Personnel Grid (2 columns, no scroll needed) -->
-        <div class="personnel-section">
-            <div class="section-title">
-                <span>Персонал (<span id="personCount">0</span>)</span>
-                <span id="selectedCount" style="color: var(--primary);"></span>
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Personnel Tab -->
+            <div class="tab-content active" id="tab-personnel">
+                <div class="section-title">
+                    <span>ПЕРСОНАЛ</span>
+                    <span class="selection-hint" id="selectionHint">Тапайте для вибору</span>
+                </div>
+                <div class="person-grid" id="personGrid"></div>
             </div>
-            <div class="person-grid" id="personGrid"></div>
+
+            <!-- Statistics Tab -->
+            <div class="tab-content" id="tab-stats">
+                <div class="stats-container">
+                    <div class="chart-card">
+                        <div class="chart-title">📈 Активність за день</div>
+                        <div class="chart-bars" id="chartBars"></div>
+                    </div>
+                    
+                    <div class="timeline-card">
+                        <div class="chart-title">🕐 Історія переміщень</div>
+                        <div id="timelineList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Tab -->
+            <div class="tab-content" id="tab-admin">
+                <div class="form-section">
+                    <label class="form-label">➕ Новий співробітник</label>
+                    <input type="text" class="form-input" id="newPersonName" placeholder="Прізвище Ім'я По-батькові">
+                    <input type="text" class="form-input" id="newPersonPin" placeholder="PIN (4 цифри)" maxlength="4">
+                    
+                    <label class="form-label">Початковий статус</label>
+                    <div class="status-grid" style="margin-bottom: 16px;">
+                        <div class="status-opt" onclick="selectNewStatus('in', '🏢 В приміщенні')" style="background: #e8f5e9;">
+                            <span class="icon">🏢</span>
+                            <span>В приміщенні</span>
+                        </div>
+                        <div class="status-opt" onclick="selectNewStatus('vz', '📞 ВЗ')" style="background: #e3f2fd;">
+                            <span class="icon">📞</span>
+                            <span>ВЗ</span>
+                        </div>
+                        <div class="status-opt" onclick="selectNewStatus('rz', '📋 РЗ')" style="background: #fff3e0;">
+                            <span class="icon">📋</span>
+                            <span>РЗ</span>
+                        </div>
+                        <div class="status-opt" onclick="selectNewStatus('out', '⚪ Не на роботі')" style="background: #f5f5f5;">
+                            <span class="icon">⚪</span>
+                            <span>Не на роботі</span>
+                        </div>
+                    </div>
+                    
+                    <button class="save-btn" onclick="addNewPerson()">✅ Додати співробітника</button>
+                </div>
+
+                <div class="form-section">
+                    <label class="form-label">👤 Новий користувач системи</label>
+                    <input type="text" class="form-input" id="adminName" placeholder="ПІБ">
+                    <input type="text" class="form-input" id="adminPin" placeholder="PIN" maxlength="4">
+                    
+                    <label class="form-label">Роль</label>
+                    <div class="role-selector">
+                        <button class="role-btn selected" onclick="setRole('editor')" data-role="editor">✏️ Редактор</button>
+                        <button class="role-btn" onclick="setRole('reader')" data-role="reader">👁️ Читач</button>
+                    </div>
+                    
+                    <button class="save-btn" onclick="addAdminUser()" style="background: var(--info);">➕ Додати користувача</button>
+                </div>
+
+                <div class="form-section">
+                    <label class="form-label">📋 Список користувачів</label>
+                    <div id="adminList"></div>
+                </div>
+
+                <div style="padding: 20px;">
+                    <button class="save-btn" onclick="exportData()" style="background: #333; margin-bottom: 12px;">📊 Експорт CSV</button>
+                    <button class="save-btn" onclick="logout()" style="background: var(--danger);">🚪 Вийти з системи</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Bottom Toolbar -->
-<div class="bottom-toolbar editor-only admin-only" id="toolbar">
-    <button class="tool-btn" onclick="clearSelection()" id="clearBtn">✕</button>
-    <button class="tool-btn primary" onclick="openBulkSheet()" id="changeBtn">📝</button>
-    <button class="tool-btn" onclick="toggleMenu()">☰</button>
+<div class="bottom-toolbar" id="toolbar">
+    <button class="tool-btn danger" onclick="clearSelection()" title="Скасувати">✕</button>
+    <button class="tool-btn primary" onclick="openBulkSheet()" title="Змінити статус">📝</button>
+    <span style="display: flex; align-items: center; padding: 0 8px; font-size: 14px; font-weight: 600; color: #333;" id="selectedCount">0</span>
 </div>
 
 <!-- Status Sheet -->
@@ -871,81 +1181,16 @@
         </div>
     </div>
 
-    <input type="text" class="sheet-input" id="sheetCustom" placeholder="Свій варіант...">
-    <button class="sheet-btn" onclick="applyStatus()">Підтвердити</button>
+    <input type="text" class="sheet-input" id="sheetCustom" placeholder="Свій варіант статусу...">
+    <button class="sheet-btn" onclick="applyStatus()">Підтвердити зміни</button>
 </div>
 
-<!-- Menu Sheet -->
-<div class="sheet-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-<div class="bottom-sheet" id="menuSheet">
+<!-- Custom Status Sheet -->
+<div class="bottom-sheet" id="customStatusSheet">
     <div class="sheet-handle"></div>
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-        <button class="sheet-btn admin-only" onclick="openAdmin()" style="background: #333;">⚙️ Управління</button>
-        <button class="sheet-btn" onclick="exportData()" style="background: var(--info);">📊 Експорт</button>
-        <button class="sheet-btn" onclick="logout()" style="background: var(--danger);">🚪 Вийти</button>
-    </div>
-</div>
-
-<!-- Add Person Modal -->
-<div class="modal-full" id="addPersonModal">
-    <div class="modal-header">
-        <button class="back-btn" onclick="closeAddPerson()">←</button>
-        <div class="modal-title">➕ Новий співробітник</div>
-    </div>
-
-    <div class="form-section">
-        <label class="form-label">ПІБ</label>
-        <input type="text" class="form-input" id="newPersonName" placeholder="Іваненко Петро Сидорович">
-        
-        <label class="form-label">PIN (4 цифри)</label>
-        <input type="text" class="form-input" id="newPersonPin" placeholder="1234" maxlength="4">
-        
-        <label class="form-label">Статус</label>
-        <div class="status-grid" style="margin-bottom: 16px;">
-            <div class="status-opt" onclick="selectNewStatus('in', '🏢 В приміщенні')" style="background: #e8f5e9;">
-                <span class="icon">🏢</span>
-                <span>В приміщенні</span>
-            </div>
-            <div class="status-opt" onclick="selectNewStatus('vz', '📞 ВЗ')" style="background: #e3f2fd;">
-                <span class="icon">📞</span>
-                <span>ВЗ</span>
-            </div>
-            <div class="status-opt" onclick="selectNewStatus('rz', '📋 РЗ')" style="background: #fff3e0;">
-                <span class="icon">📋</span>
-                <span>РЗ</span>
-            </div>
-            <div class="status-opt" onclick="selectNewStatus('out', '⚪ Не на роботі')" style="background: #f5f5f5;">
-                <span class="icon">⚪</span>
-                <span>Не на роботі</span>
-            </div>
-        </div>
-        
-        <button class="save-btn" onclick="addNewPerson()">✅ Додати</button>
-    </div>
-</div>
-
-<!-- Admin Modal -->
-<div class="modal-full" id="adminModal">
-    <div class="modal-header">
-        <button class="back-btn" onclick="closeAdmin()">←</button>
-        <div class="modal-title">⚙️ Користувачі</div>
-    </div>
-
-    <div class="form-section">
-        <label class="form-label">Новий користувач</label>
-        <input type="text" class="form-input" id="adminName" placeholder="ПІБ">
-        <input type="text" class="form-input" id="adminPin" placeholder="PIN" maxlength="4">
-        
-        <label class="form-label">Роль</label>
-        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-            <button class="role-btn selected" onclick="setRole('editor')" data-role="editor" style="flex:1;padding:10px;border:2px solid var(--primary);border-radius:10px;background:#f0f4ff;">✏️ Редактор</button>
-            <button class="role-btn" onclick="setRole('reader')" data-role="reader" style="flex:1;padding:10px;border:2px solid #e5e5ea;border-radius:10px;">👁️ Читач</button>
-        </div>
-        
-        <button class="save-btn" onclick="addAdminUser()">➕ Додати</button>
-    </div>
-
-    <div id="adminList"></div>
+    <div class="sheet-title">⚡ Швидкий статус</div>
+    <input type="text" class="sheet-input" id="quickCustomInput" placeholder="Введіть свій статус...">
+    <button class="sheet-btn" onclick="applyQuickCustom()">Застосувати до вибраних</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -961,8 +1206,10 @@ let sheetStatus = null;
 let sheetText = '';
 let newPersonStatus = 'in';
 let newPersonStatusText = '🏢 В приміщенні';
+let currentTab = 'personnel';
 
-let users = JSON.parse(localStorage.getItem('users')) || [
+// 11 Employees
+let users = [
     { pin: '1111', name: 'Шевченко О.П.', role: 'admin' },
     { pin: '2222', name: 'Коваленко М.І.', role: 'editor' },
     { pin: '3333', name: 'Бондаренко С.М.', role: 'reader' },
@@ -970,7 +1217,7 @@ let users = JSON.parse(localStorage.getItem('users')) || [
     { pin: '5555', name: 'Мельник В.О.', role: 'reader' }
 ];
 
-let personnel = JSON.parse(localStorage.getItem('personnel')) || [
+let personnel = [
     { id: 1, name: 'Шевченко О.П.', status: 'in', statusText: '🏢 В приміщенні', currentSessionStart: new Date(Date.now()-7200000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-7200000).toISOString(),end:null}] },
     { id: 2, name: 'Коваленко М.І.', status: 'vz', statusText: '📞 ВЗ', currentSessionStart: new Date(Date.now()-1800000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-10800000).toISOString(),end:new Date(Date.now()-1800000).toISOString()},{status:'vz',text:'📞 ВЗ',start:new Date(Date.now()-1800000).toISOString(),end:null}] },
     { id: 3, name: 'Бондаренко С.М.', status: 'rz', statusText: '📋 РЗ', currentSessionStart: new Date(Date.now()-3600000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-14400000).toISOString(),end:new Date(Date.now()-3600000).toISOString()},{status:'rz',text:'📋 РЗ',start:new Date(Date.now()-3600000).toISOString(),end:null}] },
@@ -987,29 +1234,34 @@ let personnel = JSON.parse(localStorage.getItem('personnel')) || [
 // Clock
 function updateTime() {
     const now = new Date();
-    document.getElementById('currentTime').textContent = now.toLocaleTimeString('uk-UA', {hour:'2-digit',minute:'2-digit'});
+    const el = document.getElementById('currentTime');
+    if (el) el.textContent = now.toLocaleTimeString('uk-UA', {hour:'2-digit',minute:'2-digit'});
 }
 setInterval(updateTime, 1000);
 updateTime();
 
-// PIN
+// PIN Functions
 function addPin(num) {
     if (currentPin.length < 4) {
         currentPin += num;
         updatePin();
-        document.getElementById('waterFill').style.height = (currentPin.length / 4 * 100) + '%';
+        const fill = document.getElementById('waterFill');
+        if (fill) fill.style.height = (currentPin.length / 4 * 100) + '%';
     }
 }
 
 function clearPin() {
     currentPin = currentPin.slice(0, -1);
     updatePin();
-    document.getElementById('waterFill').style.height = (currentPin.length / 4 * 100) + '%';
-    document.getElementById('pinDisplay').classList.remove('error');
+    const fill = document.getElementById('waterFill');
+    if (fill) fill.style.height = (currentPin.length / 4 * 100) + '%';
+    const disp = document.getElementById('pinDisplay');
+    if (disp) disp.classList.remove('error');
 }
 
 function updatePin() {
-    document.getElementById('pinDisplay').textContent = currentPin.length === 0 ? '••••' : '•'.repeat(currentPin.length) + '•'.repeat(4 - currentPin.length);
+    const disp = document.getElementById('pinDisplay');
+    if (disp) disp.textContent = currentPin.length === 0 ? '••••' : '•'.repeat(currentPin.length) + '•'.repeat(4 - currentPin.length);
 }
 
 function checkPin() {
@@ -1017,147 +1269,264 @@ function checkPin() {
     
     const user = users.find(u => u.pin === currentPin);
     if (user) {
-        document.getElementById('pinDisplay').classList.add('success');
-        document.getElementById('waterFill').style.height = '100%';
+        const disp = document.getElementById('pinDisplay');
+        const fill = document.getElementById('waterFill');
+        if (disp) disp.classList.add('success');
+        if (fill) fill.style.height = '100%';
         
         setTimeout(() => {
             currentUser = user;
-            document.body.setAttribute('data-role', user.role);
             
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
+            const loginScreen = document.getElementById('loginScreen');
+            const mainApp = document.getElementById('mainApp');
+            const headerName = document.getElementById('headerName');
+            const headerRole = document.getElementById('headerRole');
+            const quickActions = document.getElementById('quickActions');
+            const toolbar = document.getElementById('toolbar');
             
-            document.getElementById('headerName').textContent = user.name.split(' ')[0];
-            document.getElementById('headerRole').textContent = user.role;
+            if (loginScreen) loginScreen.style.display = 'none';
+            if (mainApp) {
+                mainApp.style.display = 'flex';
+                mainApp.classList.add('active');
+            }
             
-            if (!personnel.find(p => p.name === user.name)) {
-                personnel.push({
-                    id: Date.now(),
-                    name: user.name,
-                    status: 'in',
-                    statusText: '🏢 В приміщенні',
-                    currentSessionStart: new Date().toISOString(),
-                    history: [{status:'in',text:'🏢 В приміщенні',start:new Date().toISOString(),end:null}]
-                });
-                saveData();
+            if (headerName) headerName.textContent = user.name.split(' ')[0];
+            if (headerRole) headerRole.textContent = user.role;
+            
+            // Role-based visibility
+            if (user.role === 'reader') {
+                if (quickActions) quickActions.style.display = 'none';
+                if (toolbar) toolbar.style.display = 'none';
+                // Switch to stats tab for readers
+                switchTab('stats');
+            } else {
+                if (quickActions) quickActions.style.display = 'grid';
+                if (toolbar) toolbar.style.display = 'flex';
             }
             
             renderGrid();
             updateStats();
-            updateQuick();
+            renderStats();
+            renderAdminList();
             
             currentPin = '';
             updatePin();
-            document.getElementById('waterFill').style.height = '0%';
-            document.getElementById('pinDisplay').classList.remove('success');
-            showToast(`Вітаємо!`);
+            if (fill) {
+                fill.style.height = '0%';
+                fill.style.background = '';
+            }
+            if (disp) disp.classList.remove('success');
+            showToast('Вітаємо, ' + user.name.split(' ')[0] + '!');
         }, 400);
     } else {
-        document.getElementById('pinDisplay').classList.add('error');
+        const disp = document.getElementById('pinDisplay');
+        const fill = document.getElementById('waterFill');
+        if (disp) disp.classList.add('error');
+        if (fill) fill.style.background = 'rgba(255, 59, 48, 0.4)';
+        
         setTimeout(() => {
             currentPin = '';
             updatePin();
-            document.getElementById('pinDisplay').classList.remove('error');
-            document.getElementById('waterFill').style.height = '0%';
+            if (disp) disp.classList.remove('error');
+            if (fill) {
+                fill.style.height = '0%';
+                fill.style.background = '';
+            }
         }, 600);
     }
 }
 
-// Status
-function setMyStatus(status, text) {
-    if (currentUser.role === 'reader') {
-        showToast('⛔ Тільки перегляд');
+// Tab Switching
+function switchTab(tab) {
+    currentTab = tab;
+    
+    // Update tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+    
+    // Update content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    document.getElementById('tab-' + tab).classList.add('active');
+    
+    if (tab === 'stats') renderStats();
+    if (tab === 'admin') renderAdminList();
+}
+
+// Quick Actions - Apply to ALL selected (not just first)
+function applyQuickStatus(status, text) {
+    if (!currentUser || currentUser.role === 'reader') {
+        showToast('⛔ Немає прав');
         return;
     }
-    const person = personnel.find(p => p.name === currentUser.name);
-    if (person) {
-        changeStatus(person, status, text);
-        updateQuick();
-        showToast(`✅ ${text.split(' ')[0]}`);
+    
+    const targets = selectedPersons.size > 0 ? Array.from(selectedPersons) : 
+                   personnel.filter(p => p.name === currentUser.name).map(p => p.id);
+    
+    if (targets.length === 0) {
+        showToast('⛔ Немає цілей');
+        return;
+    }
+    
+    targets.forEach(id => {
+        const person = personnel.find(p => p.id === id);
+        if (person) changeStatus(person, status, text);
+    });
+    
+    // Update UI
+    updateQuickButtons(status);
+    showToast('✅ Оновлено ' + targets.length + ' співробітників');
+    
+    // Clear selection after action
+    if (selectedPersons.size > 0) {
+        clearSelection();
     }
 }
 
+function updateQuickButtons(activeStatus) {
+    ['in', 'vz', 'rz', 'lunch'].forEach(s => {
+        const btn = document.getElementById('btn-' + s);
+        if (btn) btn.classList.toggle('active', s === activeStatus);
+    });
+}
+
+function openCustomStatus() {
+    if (!currentUser || currentUser.role === 'reader') {
+        showToast('⛔ Немає прав');
+        return;
+    }
+    
+    const overlay = document.getElementById('sheetOverlay');
+    const sheet = document.getElementById('customStatusSheet');
+    const input = document.getElementById('quickCustomInput');
+    
+    if (overlay) overlay.classList.add('active');
+    if (sheet) sheet.classList.add('active');
+    if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 100);
+    }
+}
+
+function applyQuickCustom() {
+    const input = document.getElementById('quickCustomInput');
+    const text = input ? input.value.trim() : '';
+    
+    if (!text) {
+        showToast('⛔ Введіть статус');
+        return;
+    }
+    
+    applyQuickStatus('custom', '⚡ ' + text);
+    closeSheet();
+}
+
+// Status Management
 function changeStatus(person, status, text) {
     const now = new Date().toISOString();
-    if (person.history.length && !person.history[person.history.length-1].end) {
+    if (person.history && person.history.length && !person.history[person.history.length-1].end) {
         person.history[person.history.length-1].end = now;
     }
     person.status = status;
     person.statusText = text;
     person.currentSessionStart = now;
+    if (!person.history) person.history = [];
     person.history.push({status, text, start: now, end: null});
-    if (person.history.length > 3) person.history = person.history.slice(-3);
-    saveData();
+    if (person.history.length > 5) person.history = person.history.slice(-5);
+    
     renderGrid();
     updateStats();
 }
 
-// Render Grid (2 columns, compact)
-function renderGrid() {
-    const container = document.getElementById('personGrid');
-    container.innerHTML = '';
-    
-    // Limit to 8 visible to fit screen
-    const visible = personnel.slice(0, 8);
-    document.getElementById('personCount').textContent = personnel.length;
-    
-    visible.forEach(p => {
-        const isSel = selectedPersons.has(p.id);
-        const last = p.history[p.history.length-1];
-        const dur = last ? calcDur(last.start, last.end || new Date().toISOString()) : '';
-        
-        const card = document.createElement('div');
-        card.className = 'person-card';
-        card.onclick = (e) => onCardClick(p.id, e);
-        
-        card.innerHTML = `
-            <div class="person-header">
-                <div class="person-avatar">${p.name[0]}</div>
-                <div class="person-main-info">
-                    <div class="person-name">${p.name}</div>
-                    <div class="person-time">${dur}</div>
-                </div>
-                ${currentUser && currentUser.role !== 'reader' ? `
-                <div class="select-check ${isSel ? 'selected' : ''}" onclick="toggleSelect(${p.id}, event)">
-                    ${isSel ? '✓' : ''}
-                </div>` : ''}
-            </div>
-            <span class="status-badge" style="background:${getColor(p.status)};align-self:flex-start;">${p.statusText}</span>
-        `;
-        container.appendChild(card);
-    });
-}
-
 function getColor(s) {
-    const c = {in:'#34c759', vz:'#007aff', rz:'#ff9500', lunch:'#ff9500', meeting:'#af52de', home:'#ff3b30', out:'#999'};
+    const c = {in:'#34c759', vz:'#007aff', rz:'#ff9500', lunch:'#ff9500', meeting:'#af52de', home:'#ff3b30', out:'#999', custom:'#667eea'};
     return c[s] || '#999';
 }
 
 function calcDur(a, b) {
     const d = new Date(b) - new Date(a);
     const h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000);
-    if (h > 0) return `${h}г ${m}хв`;
-    return `${m}хв`;
+    if (h > 0) return h + 'г ' + m + 'хв';
+    return m + 'хв';
 }
 
-function onCardClick(id, e) {
-    if (e.target.closest('.select-check')) return;
-    if (currentUser.role === 'reader') return;
-    openSheet([id]);
+// Grid Rendering - Tap to select (no checkboxes)
+function renderGrid() {
+    const grid = document.getElementById('personGrid');
+    const sectionTitle = document.querySelector('.section-title span:first-child');
+    const hint = document.getElementById('selectionHint');
+    
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    if (sectionTitle) sectionTitle.textContent = 'ПЕРСОНАЛ (' + personnel.length + ')';
+    if (hint) hint.classList.toggle('visible', selectedPersons.size > 0);
+    
+    const isReader = !currentUser || currentUser.role === 'reader';
+    
+    personnel.forEach(p => {
+        const isSel = selectedPersons.has(p.id);
+        const last = p.history && p.history.length ? p.history[p.history.length-1] : null;
+        const dur = last ? calcDur(last.start, last.end || new Date().toISOString()) : '--';
+        
+        const card = document.createElement('div');
+        card.className = 'person-card ' + (isSel ? 'selected' : '');
+        
+        // Single tap for readers, tap to select for editors
+        card.onclick = function(e) {
+            if (isReader) return;
+            
+            if (selectedPersons.size === 0 && !isSel) {
+                // First selection - just select
+                toggleSelect(p.id);
+            } else {
+                // Multi-select mode
+                toggleSelect(p.id);
+            }
+        };
+        
+        // Long press or double tap for quick status change when not in selection mode
+        card.ondblclick = function(e) {
+            if (isReader) return;
+            if (selectedPersons.size === 0) {
+                openSheet([p.id]);
+            }
+        };
+        
+        card.innerHTML = 
+            '<div class="person-header">' +
+                '<div class="person-avatar">' + p.name.charAt(0) + '</div>' +
+                '<div class="person-info">' +
+                    '<div class="person-name">' + p.name + '</div>' +
+                    '<div class="person-time">' + dur + ' • ' + p.statusText.split(' ')[0] + '</div>' +
+                '</div>' +
+            '</div>' +
+            '<span class="status-badge" style="background:' + getColor(p.status) + ';">' + p.statusText + '</span>';
+        
+        grid.appendChild(card);
+    });
 }
 
-function toggleSelect(id, e) {
-    e.stopPropagation();
-    selectedPersons.has(id) ? selectedPersons.delete(id) : selectedPersons.add(id);
+function toggleSelect(id) {
+    if (selectedPersons.has(id)) {
+        selectedPersons.delete(id);
+    } else {
+        selectedPersons.add(id);
+    }
     updateSelUI();
     renderGrid();
 }
 
 function updateSelUI() {
     const n = selectedPersons.size;
-    document.getElementById('selectedCount').textContent = n ? `${n} вибрано` : '';
-    document.getElementById('clearBtn').style.display = n ? 'flex' : 'none';
-    document.getElementById('changeBtn').style.display = n ? 'flex' : 'none';
+    const toolbar = document.getElementById('toolbar');
+    const count = document.getElementById('selectedCount');
+    
+    if (toolbar) toolbar.classList.toggle('visible', n > 0);
+    if (count) count.textContent = n;
 }
 
 function clearSelection() {
@@ -1167,28 +1536,129 @@ function clearSelection() {
 }
 
 function updateStats() {
-    document.getElementById('statTotal').textContent = personnel.length;
-    document.getElementById('statIn').textContent = personnel.filter(p => p.status === 'in').length;
-    document.getElementById('statVz').textContent = personnel.filter(p => p.status === 'vz').length;
-    document.getElementById('statOut').textContent = personnel.filter(p => ['home','out'].includes(p.status)).length;
+    const total = document.getElementById('statTotal');
+    const statIn = document.getElementById('statIn');
+    const statVz = document.getElementById('statVz');
+    const statOut = document.getElementById('statOut');
+    
+    if (total) total.textContent = personnel.length;
+    if (statIn) statIn.textContent = personnel.filter(p => p.status === 'in').length;
+    if (statVz) statVz.textContent = personnel.filter(p => p.status === 'vz').length;
+    if (statOut) statOut.textContent = personnel.filter(p => ['home','out','hospital','trip'].includes(p.status)).length;
 }
 
-function updateQuick() {
-    const p = personnel.find(x => x.name === currentUser?.name);
-    if (!p) return;
-    document.querySelectorAll('.action-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['in','vz','rz','lunch'][i] === p.status);
+// Statistics Tab
+function renderStats() {
+    renderChart();
+    renderTimeline();
+}
+
+function renderChart() {
+    const container = document.getElementById('chartBars');
+    if (!container) return;
+    
+    const stats = {
+        '00-04': 0, '04-08': 0, '08-12': 0, '12-16': 0, '16-20': 0, '20-24': 0
+    };
+    
+    const today = new Date().toDateString();
+    
+    personnel.forEach(p => {
+        if (!p.history) return;
+        p.history.forEach(h => {
+            const start = new Date(h.start);
+            if (start.toDateString() !== today) return;
+            
+            const hour = start.getHours();
+            let slot;
+            if (hour < 4) slot = '00-04';
+            else if (hour < 8) slot = '04-08';
+            else if (hour < 12) slot = '08-12';
+            else if (hour < 16) slot = '12-16';
+            else if (hour < 20) slot = '16-20';
+            else slot = '20-24';
+            
+            stats[slot]++;
+        });
     });
+    
+    const max = Math.max(...Object.values(stats), 1);
+    
+    container.innerHTML = Object.entries(stats).map(([label, val]) => {
+        const height = (val / max * 100);
+        const colors = ['#667eea', '#764ba2', '#34c759', '#ff9500', '#007aff', '#af52de'];
+        const color = colors[Object.keys(stats).indexOf(label) % colors.length];
+        
+        return `
+            <div class="chart-bar-group">
+                <div class="chart-bar" style="height: ${height}%; background: ${color};">
+                    ${val > 0 ? `<span class="chart-value">${val}</span>` : ''}
+                </div>
+                <span class="chart-bar-label">${label}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderTimeline() {
+    const container = document.getElementById('timelineList');
+    if (!container) return;
+    
+    const today = new Date().toDateString();
+    const events = [];
+    
+    personnel.forEach(p => {
+        if (!p.history) return;
+        p.history.forEach(h => {
+            const start = new Date(h.start);
+            if (start.toDateString() !== today) return;
+            
+            events.push({
+                time: start,
+                name: p.name,
+                status: h.text,
+                duration: h.end ? calcDur(h.start, h.end) : 'триває...'
+            });
+        });
+    });
+    
+    events.sort((a, b) => b.time - a.time);
+    
+    if (events.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <div class="empty-text">Сьогодні ще немає активності</div>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = events.slice(0, 20).map(e => `
+        <div class="timeline-item">
+            <div class="timeline-time">${e.time.getHours().toString().padStart(2,'0')}:${e.time.getMinutes().toString().padStart(2,'0')}</div>
+            <div class="timeline-content">
+                <div class="timeline-name">${e.name}</div>
+                <div class="timeline-status">${e.status} • ${e.duration}</div>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Sheets
 function openSheet(ids) {
     sheetTargets = ids;
-    document.getElementById('sheetTitle').textContent = ids.length === 1 ? 'Змінити статус' : `Змінити (${ids.length})`;
-    document.getElementById('sheetOverlay').classList.add('active');
-    document.getElementById('statusSheet').classList.add('active');
+    const title = document.getElementById('sheetTitle');
+    const overlay = document.getElementById('sheetOverlay');
+    const sheet = document.getElementById('statusSheet');
+    
+    if (title) title.textContent = ids.length === 1 ? 'Змінити статус' : 'Змінити (' + ids.length + ') співробітників';
+    if (overlay) overlay.classList.add('active');
+    if (sheet) sheet.classList.add('active');
+    
     document.querySelectorAll('#statusSheet .status-opt').forEach(el => el.classList.remove('selected'));
-    document.getElementById('sheetCustom').value = '';
+    const custom = document.getElementById('sheetCustom');
+    if (custom) custom.value = '';
     sheetStatus = null;
 }
 
@@ -1197,68 +1667,58 @@ function openBulkSheet() {
 }
 
 function closeSheet() {
-    document.getElementById('sheetOverlay').classList.remove('active');
-    document.getElementById('statusSheet').classList.remove('active');
+    const overlay = document.getElementById('sheetOverlay');
+    const statusSheet = document.getElementById('statusSheet');
+    const customSheet = document.getElementById('customStatusSheet');
+    
+    if (overlay) overlay.classList.remove('active');
+    if (statusSheet) statusSheet.classList.remove('active');
+    if (customSheet) customSheet.classList.remove('active');
 }
 
 function selectStatus(st, txt) {
     document.querySelectorAll('#statusSheet .status-opt').forEach(el => el.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
+    if (event && event.currentTarget) event.currentTarget.classList.add('selected');
     sheetStatus = st;
     sheetText = txt;
-    document.getElementById('sheetCustom').value = '';
+    const custom = document.getElementById('sheetCustom');
+    if (custom) custom.value = '';
 }
 
 function applyStatus() {
-    const cst = document.getElementById('sheetCustom').value.trim();
+    const customEl = document.getElementById('sheetCustom');
+    const cst = customEl ? customEl.value.trim() : '';
     const st = cst ? 'custom' : sheetStatus;
-    const txt = cst || sheetText;
-    if (!st) { showToast('⛔ Оберіть статус'); return; }
+    const txt = cst ? '⚡ ' + cst : sheetText;
+    
+    if (!st) {
+        showToast('⛔ Оберіть статус');
+        return;
+    }
     
     sheetTargets.forEach(id => {
         const p = personnel.find(x => x.id === id);
         if (p) changeStatus(p, st, txt);
     });
     
-    showToast(`✅ Оновлено!`);
+    showToast('✅ Оновлено ' + sheetTargets.length + ' співробітників!');
     closeSheet();
     clearSelection();
 }
 
-function toggleMenu() {
-    document.getElementById('menuOverlay').classList.add('active');
-    document.getElementById('menuSheet').classList.add('active');
-}
-
-function closeMenu() {
-    document.getElementById('menuOverlay').classList.remove('active');
-    document.getElementById('menuSheet').classList.remove('active');
-}
-
-// Add Person
-function openAddPerson() {
-    document.getElementById('addPersonModal').classList.add('active');
-    document.getElementById('newPersonName').value = '';
-    document.getElementById('newPersonPin').value = '';
-    newPersonStatus = 'in';
-    newPersonStatusText = '🏢 В приміщенні';
-    document.querySelectorAll('#addPersonModal .status-opt').forEach(el => el.classList.remove('selected'));
-}
-
-function closeAddPerson() {
-    document.getElementById('addPersonModal').classList.remove('active');
-}
-
+// Admin Functions
 function selectNewStatus(st, txt) {
     document.querySelectorAll('#addPersonModal .status-opt').forEach(el => el.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
+    if (event && event.currentTarget) event.currentTarget.classList.add('selected');
     newPersonStatus = st;
     newPersonStatusText = txt;
 }
 
 function addNewPerson() {
-    const name = document.getElementById('newPersonName').value.trim();
-    const pin = document.getElementById('newPersonPin').value.trim();
+    const nameEl = document.getElementById('newPersonName');
+    const pinEl = document.getElementById('newPersonPin');
+    const name = nameEl ? nameEl.value.trim() : '';
+    const pin = pinEl ? pinEl.value.trim() : '';
     
     if (!name || pin.length !== 4) {
         showToast('⛔ Заповніть всі поля');
@@ -1283,106 +1743,138 @@ function addNewPerson() {
     
     users.push({pin: pin, name: name, role: 'reader'});
     
-    saveData();
+    if (nameEl) nameEl.value = '';
+    if (pinEl) pinEl.value = '';
+    
     renderGrid();
     updateStats();
-    closeAddPerson();
-    showToast(`✅ Додано!`);
-}
-
-// Admin
-function openAdmin() {
-    closeMenu();
-    document.getElementById('adminModal').classList.add('active');
-    renderAdminList();
-}
-
-function closeAdmin() {
-    document.getElementById('adminModal').classList.remove('active');
+    renderStats();
+    showToast('✅ Співробітника додано!');
 }
 
 function setRole(r) {
     selectedRole = r;
     document.querySelectorAll('.role-btn').forEach(btn => {
         btn.classList.remove('selected');
-        btn.style.borderColor = '#e5e5ea';
-        btn.style.background = 'white';
     });
-    const btn = document.querySelector(`[data-role="${r}"]`);
-    btn.classList.add('selected');
-    btn.style.borderColor = 'var(--primary)';
-    btn.style.background = '#f0f4ff';
+    const btn = document.querySelector('[data-role="' + r + '"]');
+    if (btn) btn.classList.add('selected');
 }
 
 function addAdminUser() {
-    const n = document.getElementById('adminName').value.trim();
-    const p = document.getElementById('adminPin').value.trim();
-    if (!n || p.length !== 4) { showToast('⛔ Заповніть поля'); return; }
-    if (users.find(u => u.pin === p)) { showToast('⛔ PIN зайнятий'); return; }
+    const nameEl = document.getElementById('adminName');
+    const pinEl = document.getElementById('adminPin');
+    const n = nameEl ? nameEl.value.trim() : '';
+    const p = pinEl ? pinEl.value.trim() : '';
+    
+    if (!n || p.length !== 4) {
+        showToast('⛔ Заповніть поля');
+        return;
+    }
+    if (users.find(u => u.pin === p)) {
+        showToast('⛔ PIN зайнятий');
+        return;
+    }
     
     users.push({pin:p, name:n, role:selectedRole});
-    saveData();
-    document.getElementById('adminName').value = '';
-    document.getElementById('adminPin').value = '';
+    
+    if (nameEl) nameEl.value = '';
+    if (pinEl) pinEl.value = '';
+    
     renderAdminList();
-    showToast('✅ Додано!');
+    showToast('✅ Користувача додано!');
 }
 
 function renderAdminList() {
     const c = document.getElementById('adminList');
-    c.innerHTML = '<div style="padding:0 16px;font-size:11px;color:#8e8e93;text-transform:uppercase;margin-bottom:8px;">Список</div>';
+    if (!c) return;
+    
+    c.innerHTML = '';
+    
     users.forEach(u => {
         const d = document.createElement('div');
-        d.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:white;border-bottom:1px solid #f0f0f0;';
-        d.innerHTML = `
-            <div>
-                <div style="font-weight:600;font-size:14px;">${u.name}</div>
-                <div style="font-size:12px;color:#8e8e93;">PIN: ${u.pin}</div>
-            </div>
-            <span style="font-size:10px;padding:4px 10px;border-radius:10px;background:${u.role==='admin'?'#ffebee;color:#e74c3c':u.role==='editor'?'#e3f2fd;color:#007aff':'#f2f2f7;color:#666'};font-weight:600;text-transform:uppercase;">${u.role}</span>
-        `;
+        d.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;';
+        
+        const color = u.role === 'admin' ? '#e74c3c' : u.role === 'editor' ? '#007aff' : '#666';
+        const bg = u.role === 'admin' ? '#ffebee' : u.role === 'editor' ? '#e3f2fd' : '#f2f2f7';
+        
+        d.innerHTML = 
+            '<div>' +
+                '<div style="font-weight:600;font-size:15px;color:#333;">' + u.name + '</div>' +
+                '<div style="font-size:12px;color:#8e8e93;">PIN: ' + u.pin + '</div>' +
+            '</div>' +
+            '<span style="font-size:11px;padding:6px 12px;border-radius:12px;background:' + bg + ';color:' + color + ';font-weight:600;text-transform:uppercase;">' + u.role + '</span>';
+        
         c.appendChild(d);
     });
 }
 
 function exportData() {
-    closeMenu();
-    let csv = 'ПІБ,Статус\n';
+    let csv = 'ПІБ,Статус,Час останньої зміни\n';
     personnel.forEach(p => {
-        csv += `"${p.name}","${p.statusText}"\n`;
+        const lastTime = p.currentSessionStart ? new Date(p.currentSessionStart).toLocaleString('uk-UA') : '-';
+        csv += '"' + p.name + '","' + p.statusText + '","' + lastTime + '"\n';
     });
-    const blob = new Blob([csv], {type:'text/csv'});
+    const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `проход_${new Date().toISOString().slice(0,10)}.csv`;
+    a.download = 'проход_' + new Date().toISOString().slice(0,10) + '.csv';
     a.click();
     showToast('📊 Експортовано!');
 }
 
-function saveData() {
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('personnel', JSON.stringify(personnel));
-}
-
 function logout() {
-    closeMenu();
     currentUser = null;
     selectedPersons.clear();
-    document.body.removeAttribute('data-role');
-    document.getElementById('mainApp').classList.add('hidden');
-    document.getElementById('loginScreen').classList.remove('hidden');
+    
+    const loginScreen = document.getElementById('loginScreen');
+    const mainApp = document.getElementById('mainApp');
+    const toolbar = document.getElementById('toolbar');
+    
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (mainApp) {
+        mainApp.style.display = 'none';
+        mainApp.classList.remove('active');
+    }
+    if (toolbar) toolbar.classList.remove('visible');
+    
+    // Reset tabs
+    document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === 0);
+    });
+    document.querySelectorAll('.tab-content').forEach((content, i) => {
+        content.classList.toggle('active', i === 0);
+    });
+    
     currentPin = '';
     updatePin();
-    document.getElementById('waterFill').style.height = '0%';
+    const fill = document.getElementById('waterFill');
+    if (fill) fill.style.height = '0%';
 }
 
 function showToast(m) {
     const t = document.getElementById('toast');
+    if (!t) return;
     t.textContent = m;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
+    setTimeout(function() {
+        t.classList.remove('show');
+    }, 2500);
 }
+
+// Touch handling
+let touchStartY = 0;
+document.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+});
+document.addEventListener('touchmove', function(e) {
+    const diff = e.touches[0].clientY - touchStartY;
+    if (diff > 100) {
+        const sheet = document.querySelector('.bottom-sheet.active');
+        if (sheet) closeSheet();
+    }
+});
 
 // Init
 renderGrid();
