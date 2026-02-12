@@ -124,10 +124,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 12px;
             border: 3px solid transparent;
             position: relative;
             z-index: 1;
-            gap: 12px;
         }
 
         .pin-dot {
@@ -508,7 +508,6 @@
         .person-time {
             font-size: 11px;
             color: #8e8e93;
-            font-weight: 500;
         }
 
         .status-badge {
@@ -521,115 +520,6 @@
             font-weight: 600;
             color: white;
             align-self: flex-start;
-        }
-
-        /* Statistics Tab */
-        .stats-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chart-card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-        }
-
-        .chart-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #333;
-        }
-
-        .chart-bars {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 150px;
-            gap: 8px;
-            padding: 0 8px;
-        }
-
-        .chart-bar-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .chart-bar {
-            width: 100%;
-            max-width: 40px;
-            border-radius: 8px 8px 0 0;
-            transition: height 0.5s ease;
-            position: relative;
-            min-height: 4px;
-        }
-
-        .chart-bar-label {
-            font-size: 10px;
-            color: #666;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .chart-value {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .timeline-card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .timeline-item:last-child {
-            border-bottom: none;
-        }
-
-        .timeline-time {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            min-width: 50px;
-        }
-
-        .timeline-content {
-            flex: 1;
-        }
-
-        .timeline-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 2px;
-        }
-
-        .timeline-status {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .timeline-duration {
-            font-size: 12px;
-            color: #8e8e93;
-            font-weight: 500;
         }
 
         /* Bottom Toolbar */
@@ -797,7 +687,7 @@
             transform: scale(0.98);
         }
 
-        /* Admin Tab - Unified Form */
+        /* Admin Form */
         .admin-form {
             background: white;
             border-radius: 16px;
@@ -964,19 +854,19 @@
             text-transform: uppercase;
         }
 
-        .user-item-role.admin {
+        .role-admin {
             background: #ffebee;
-            color: #e74c3c;
+            color: #c62828;
         }
 
-        .user-item-role.editor {
+        .role-editor {
             background: #e3f2fd;
-            color: #007aff;
+            color: #1565c0;
         }
 
-        .user-item-role.reader {
-            background: #f2f2f7;
-            color: #666;
+        .role-reader {
+            background: #f5f5f5;
+            color: #616161;
         }
 
         .edit-hint {
@@ -1014,7 +904,9 @@
             opacity: 1;
         }
 
-        .hidden { display: none !important; }
+        .hidden {
+            display: none !important;
+        }
 
         /* Empty State */
         .empty-state {
@@ -1158,17 +1050,7 @@
 
             <!-- Statistics Tab -->
             <div class="tab-content" id="tab-stats">
-                <div class="stats-container">
-                    <div class="chart-card">
-                        <div class="chart-title">📈 Активність за день</div>
-                        <div class="chart-bars" id="chartBars"></div>
-                    </div>
-                    
-                    <div class="timeline-card">
-                        <div class="chart-title">🕐 Історія переміщень</div>
-                        <div id="timelineList"></div>
-                    </div>
-                </div>
+                <div class="stats-container" id="statsContainer"></div>
             </div>
 
             <!-- Admin Tab -->
@@ -1265,7 +1147,7 @@
         </div>
     </div>
 
-    <input type="text" class="sheet-input" id="sheetCustom" placeholder="Свій варіант статусу...">
+    <input type="text" class="sheet-input" id="sheetCustom" placeholder="Свій варіант...">
     <button class="sheet-btn" onclick="applyStatus()">Підтвердити зміни</button>
 </div>
 
@@ -1299,18 +1181,19 @@ let users = [
     { pin: '5555', name: 'Мельник В.О.', role: 'reader' }
 ];
 
+// Simple status tracking - only current status with timestamp
 let personnel = [
-    { id: 1, name: 'Шевченко О.П.', status: 'in', statusText: '🏢 В приміщенні', currentSessionStart: new Date(Date.now()-7200000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-7200000).toISOString(),end:null}] },
-    { id: 2, name: 'Коваленко М.І.', status: 'vz', statusText: '📞 ВЗ', currentSessionStart: new Date(Date.now()-1800000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-10800000).toISOString(),end:new Date(Date.now()-1800000).toISOString()},{status:'vz',text:'📞 ВЗ',start:new Date(Date.now()-1800000).toISOString(),end:null}] },
-    { id: 3, name: 'Бондаренко С.М.', status: 'rz', statusText: '📋 РЗ', currentSessionStart: new Date(Date.now()-3600000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-14400000).toISOString(),end:new Date(Date.now()-3600000).toISOString()},{status:'rz',text:'📋 РЗ',start:new Date(Date.now()-3600000).toISOString(),end:null}] },
-    { id: 4, name: 'Ткаченко А.В.', status: 'lunch', statusText: '🍽️ Обід', currentSessionStart: new Date(Date.now()-2700000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-18000000).toISOString(),end:new Date(Date.now()-2700000).toISOString()},{status:'lunch',text:'🍽️ Обід',start:new Date(Date.now()-2700000).toISOString(),end:null}] },
-    { id: 5, name: 'Мельник В.О.', status: 'meeting', statusText: '👥 Нарада', currentSessionStart: new Date(Date.now()-5400000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-9000000).toISOString(),end:new Date(Date.now()-5400000).toISOString()},{status:'meeting',text:'👥 Нарада',start:new Date(Date.now()-5400000).toISOString(),end:null}] },
-    { id: 6, name: 'Петренко І.Д.', status: 'home', statusText: '🏠 Додому', currentSessionStart: new Date(Date.now()-86400000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-172800000).toISOString(),end:new Date(Date.now()-86400000).toISOString()},{status:'home',text:'🏠 Додому',start:new Date(Date.now()-86400000).toISOString(),end:null}] },
-    { id: 7, name: 'Сидоренко Н.П.', status: 'in', statusText: '🏢 В приміщенні', currentSessionStart: new Date(Date.now()-14400000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-14400000).toISOString(),end:null}] },
-    { id: 8, name: 'Кравченко О.В.', status: 'vz', statusText: '📞 ВЗ', currentSessionStart: new Date(Date.now()-4500000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-21600000).toISOString(),end:new Date(Date.now()-7200000).toISOString()},{status:'rz',text:'📋 РЗ',start:new Date(Date.now()-7200000).toISOString(),end:new Date(Date.now()-4500000).toISOString()},{status:'vz',text:'📞 ВЗ',start:new Date(Date.now()-4500000).toISOString(),end:null}] },
-    { id: 9, name: 'Лисенко О.М.', status: 'in', statusText: '🏢 В приміщенні', currentSessionStart: new Date(Date.now()-10800000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-10800000).toISOString(),end:null}] },
-    { id: 10, name: 'Морозов Д.С.', status: 'rz', statusText: '📋 РЗ', currentSessionStart: new Date(Date.now()-5400000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-12600000).toISOString(),end:new Date(Date.now()-5400000).toISOString()},{status:'rz',text:'📋 РЗ',start:new Date(Date.now()-5400000).toISOString(),end:null}] },
-    { id: 11, name: 'Васильєва І.П.', status: 'lunch', statusText: '🍽️ Обід', currentSessionStart: new Date(Date.now()-1800000).toISOString(), history: [{status:'in',text:'🏢 В приміщенні',start:new Date(Date.now()-9000000).toISOString(),end:new Date(Date.now()-1800000).toISOString()},{status:'lunch',text:'🍽️ Обід',start:new Date(Date.now()-1800000).toISOString(),end:null}] }
+    { id: 1, name: 'Шевченко О.П.', status: 'in', statusText: '🏢 В приміщенні', since: new Date(Date.now()-7200000).toISOString(), history: [] },
+    { id: 2, name: 'Коваленко М.І.', status: 'vz', statusText: '📞 ВЗ', since: new Date(Date.now()-1800000).toISOString(), history: [] },
+    { id: 3, name: 'Бондаренко С.М.', status: 'rz', statusText: '📋 РЗ', since: new Date(Date.now()-3600000).toISOString(), history: [] },
+    { id: 4, name: 'Ткаченко А.В.', status: 'lunch', statusText: '🍽️ Обід', since: new Date(Date.now()-2700000).toISOString(), history: [] },
+    { id: 5, name: 'Мельник В.О.', status: 'meeting', statusText: '👥 Нарада', since: new Date(Date.now()-5400000).toISOString(), history: [] },
+    { id: 6, name: 'Петренко І.Д.', status: 'home', statusText: '🏠 Додому', since: new Date(Date.now()-86400000).toISOString(), history: [] },
+    { id: 7, name: 'Сидоренко Н.П.', status: 'in', statusText: '🏢 В приміщенні', since: new Date(Date.now()-14400000).toISOString(), history: [] },
+    { id: 8, name: 'Кравченко О.В.', status: 'vz', statusText: '📞 ВЗ', since: new Date(Date.now()-4500000).toISOString(), history: [] },
+    { id: 9, name: 'Лисенко О.М.', status: 'in', statusText: '🏢 В приміщенні', since: new Date(Date.now()-10800000).toISOString(), history: [] },
+    { id: 10, name: 'Морозов Д.С.', status: 'rz', statusText: '📋 РЗ', since: new Date(Date.now()-5400000).toISOString(), history: [] },
+    { id: 11, name: 'Васильєва І.П.', status: 'lunch', statusText: '🍽️ Обід', since: new Date(Date.now()-1800000).toISOString(), history: [] }
 ];
 
 // Clock
@@ -1377,6 +1260,7 @@ function checkPin() {
             if (headerName) headerName.textContent = user.name.split(' ')[0];
             if (headerRole) headerRole.textContent = user.role;
             
+            // Role-based visibility
             if (user.role === 'reader') {
                 if (quickActions) quickActions.style.display = 'none';
                 if (toolbar) toolbar.style.display = 'none';
@@ -1431,9 +1315,12 @@ function switchTab(tab) {
         content.classList.remove('active');
     });
     document.getElementById('tab-' + tab).classList.add('active');
+    
+    if (tab === 'stats') renderStats();
+    if (tab === 'admin') renderAdminList();
 }
 
-// Quick Actions
+// Quick Actions - Apply to ALL selected
 function applyQuickStatus(status, text) {
     if (!currentUser || currentUser.role === 'reader') {
         showToast('⛔ Немає прав');
@@ -1499,18 +1386,19 @@ function applyQuickCustom() {
     closeSheet();
 }
 
-// Status Management
+// Status Management - Simple: just current status
 function changeStatus(person, status, text) {
-    const now = new Date().toISOString();
-    if (person.history && person.history.length && !person.history[person.history.length-1].end) {
-        person.history[person.history.length-1].end = now;
-    }
+    // Save to history (optional, for stats)
+    if (!person.history) person.history = [];
+    person.history.push({
+        from: person.statusText,
+        to: text,
+        time: new Date().toISOString()
+    });
+    
     person.status = status;
     person.statusText = text;
-    person.currentSessionStart = now;
-    if (!person.history) person.history = [];
-    person.history.push({status, text, start: now, end: null});
-    if (person.history.length > 5) person.history = person.history.slice(-5);
+    person.since = new Date().toISOString();
     
     renderGrid();
     updateStats();
@@ -1521,8 +1409,8 @@ function getColor(s) {
     return c[s] || '#999';
 }
 
-function calcDur(a, b) {
-    const d = new Date(b) - new Date(a);
+function calcDuration(since) {
+    const d = new Date() - new Date(since);
     const h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000);
     if (h > 0) return h + 'г ' + m + 'хв';
     return m + 'хв';
@@ -1542,8 +1430,7 @@ function renderGrid() {
     
     personnel.forEach(p => {
         const isSel = selectedPersons.has(p.id);
-        const last = p.history && p.history.length ? p.history[p.history.length-1] : null;
-        const dur = last ? calcDur(last.start, last.end || new Date().toISOString()) : '--';
+        const duration = calcDuration(p.since);
         
         const card = document.createElement('div');
         card.className = 'person-card ' + (isSel ? 'selected' : '');
@@ -1565,7 +1452,7 @@ function renderGrid() {
                 '<div class="person-avatar">' + p.name.charAt(0) + '</div>' +
                 '<div class="person-info">' +
                     '<div class="person-name">' + p.name + '</div>' +
-                    '<div class="person-time">' + dur + ' • ' + p.statusText.split(' ')[0] + '</div>' +
+                    '<div class="person-time">' + duration + '</div>' +
                 '</div>' +
             '</div>' +
             '<span class="status-badge" style="background:' + getColor(p.status) + ';">' + p.statusText + '</span>';
@@ -1611,102 +1498,60 @@ function updateStats() {
     if (statOut) statOut.textContent = personnel.filter(p => ['home','out','hospital','trip'].includes(p.status)).length;
 }
 
-// Statistics Tab
+// Statistics Tab - Simple overview
 function renderStats() {
-    renderChart();
-    renderTimeline();
-}
-
-function renderChart() {
-    const container = document.getElementById('chartBars');
+    const container = document.getElementById('statsContainer');
     if (!container) return;
     
-    const stats = {
-        '00-04': 0, '04-08': 0, '08-12': 0, '12-16': 0, '16-20': 0, '20-24': 0
-    };
-    
-    const today = new Date().toDateString();
-    
+    // Group by status
+    const byStatus = {};
     personnel.forEach(p => {
-        if (!p.history) return;
-        p.history.forEach(h => {
-            const start = new Date(h.start);
-            if (start.toDateString() !== today) return;
-            
-            const hour = start.getHours();
-            let slot;
-            if (hour < 4) slot = '00-04';
-            else if (hour < 8) slot = '04-08';
-            else if (hour < 12) slot = '08-12';
-            else if (hour < 16) slot = '12-16';
-            else if (hour < 20) slot = '16-20';
-            else slot = '20-24';
-            
-            stats[slot]++;
-        });
+        if (!byStatus[p.statusText]) byStatus[p.statusText] = [];
+        byStatus[p.statusText].push(p);
     });
     
-    const max = Math.max(...Object.values(stats), 1);
+    // Calculate average duration per status
+    let html = '<div style="display: grid; gap: 12px;">';
     
-    container.innerHTML = Object.entries(stats).map(([label, val]) => {
-        const height = (val / max * 100);
-        const colors = ['#667eea', '#764ba2', '#34c759', '#ff9500', '#007aff', '#af52de'];
-        const color = colors[Object.keys(stats).indexOf(label) % colors.length];
-        
-        return `
-            <div class="chart-bar-group">
-                <div class="chart-bar" style="height: ${height}%; background: ${color};">
-                    ${val > 0 ? `<span class="chart-value">${val}</span>` : ''}
+    // Summary card
+    html += `
+        <div style="background: white; border-radius: 16px; padding: 16px;">
+            <div style="font-size: 14px; font-weight: 700; color: #666; margin-bottom: 12px; text-transform: uppercase;">📊 Загальна ситуація</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                <div style="text-align: center; padding: 12px; background: #f8f9fa; border-radius: 12px;">
+                    <div style="font-size: 28px; font-weight: 700; color: var(--primary);">${personnel.length}</div>
+                    <div style="font-size: 12px; color: #666;">Всього співробітників</div>
                 </div>
-                <span class="chart-bar-label">${label}</span>
-            </div>
-        `;
-    }).join('');
-}
-
-function renderTimeline() {
-    const container = document.getElementById('timelineList');
-    if (!container) return;
-    
-    const today = new Date().toDateString();
-    const events = [];
-    
-    personnel.forEach(p => {
-        if (!p.history) return;
-        p.history.forEach(h => {
-            const start = new Date(h.start);
-            if (start.toDateString() !== today) return;
-            
-            events.push({
-                time: start,
-                name: p.name,
-                status: h.text,
-                duration: h.end ? calcDur(h.start, h.end) : 'триває...'
-            });
-        });
-    });
-    
-    events.sort((a, b) => b.time - a.time);
-    
-    if (events.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">📭</div>
-                <div class="empty-text">Сьогодні ще немає активності</div>
-            </div>
-        `;
-        return;
-    }
-    
-    container.innerHTML = events.slice(0, 20).map(e => `
-        <div class="timeline-item">
-            <div class="timeline-time">${e.time.getHours().toString().padStart(2,'0')}:${e.time.getMinutes().toString().padStart(2,'0')}</div>
-            <div class="timeline-content">
-                <div class="timeline-name">${e.name}</div>
-                <div class="timeline-status">${e.status} • ${e.duration}</div>
+                <div style="text-align: center; padding: 12px; background: #f8f9fa; border-radius: 12px;">
+                    <div style="font-size: 28px; font-weight: 700; color: var(--success);">${personnel.filter(p => p.status === 'in').length}</div>
+                    <div style="font-size: 12px; color: #666;">Зараз в приміщенні</div>
+                </div>
             </div>
         </div>
-    `).join('');
+    `;
+    
+    // By status
+    Object.entries(byStatus).forEach(([status, people]) => {
+        const avgDur = people.reduce((sum, p) => sum + (new Date() - new Date(p.since)), 0) / people.length;
+        const avgH = Math.floor(avgDur / 3600000);
+        const avgM = Math.floor((avgDur % 3600000) / 60000);
+        
+        html += `
+            <div style="background: white; border-radius: 16px; padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-weight: 600; font-size: 16px;">${status}</span>
+                    <span style="background: ${getColor(people[0].status)}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;">${people.length}</span>
+                </div>
+                <div style="font-size: 13px; color: #666; margin-bottom: 8px;">Середній час: ${avgH}г ${avgM}хв</div>
+                <div style="font-size: 12px; color: #999;">
+                    ${people.map(p => p.name.split(' ')[0]).join(', ')}
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 // Sheets
@@ -1771,13 +1616,11 @@ function applyStatus() {
 }
 
 // Unified Admin Form
-function setRole(r) {
-    selectedRole = r;
+function setRole(role) {
+    selectedRole = role;
     document.querySelectorAll('.role-btn').forEach(btn => {
-        btn.classList.remove('selected');
+        btn.classList.toggle('selected', btn.dataset.role === role);
     });
-    const btn = document.querySelector('[data-role="' + r + '"]');
-    if (btn) btn.classList.add('selected');
 }
 
 function editUser(pin) {
@@ -1786,26 +1629,21 @@ function editUser(pin) {
     
     editingUser = user;
     
-    // Fill form
     document.getElementById('userName').value = user.name;
     document.getElementById('userPin').value = user.pin;
     document.getElementById('editingUserPin').value = user.pin;
     
-    // Set role
     setRole(user.role);
     
-    // Update UI
     document.getElementById('formTitle').textContent = '✏️ Редагування';
     document.getElementById('formMode').textContent = 'редагування';
     document.getElementById('saveBtn').textContent = '💾 Зберегти';
     document.getElementById('cancelBtn').classList.remove('hidden');
     
-    // Show delete button only if not current user
-    const deleteBtn = document.getElementById('deleteBtn');
     if (user.pin === currentUser.pin) {
-        deleteBtn.classList.add('hidden');
+        document.getElementById('deleteBtn').classList.add('hidden');
     } else {
-        deleteBtn.classList.remove('hidden');
+        document.getElementById('deleteBtn').classList.remove('hidden');
     }
     
     showToast('✏️ Режим редагування');
@@ -1814,12 +1652,10 @@ function editUser(pin) {
 function cancelEdit() {
     editingUser = null;
     
-    // Clear form
     document.getElementById('userName').value = '';
     document.getElementById('userPin').value = '';
     document.getElementById('editingUserPin').value = '';
     
-    // Reset UI
     document.getElementById('formTitle').textContent = '➕ Новий користувач';
     document.getElementById('formMode').textContent = 'створення';
     document.getElementById('saveBtn').textContent = '➕ Створити';
@@ -1840,7 +1676,6 @@ function saveUser() {
     }
     
     if (editingUser) {
-        // Update existing
         if (pin !== oldPin && users.find(u => u.pin === pin)) {
             showToast('⛔ Новий PIN вже зайнятий');
             return;
@@ -1850,7 +1685,6 @@ function saveUser() {
         if (userIndex !== -1) {
             users[userIndex] = { pin: pin, name: name, role: selectedRole };
             
-            // Update current user if editing self
             if (currentUser.pin === oldPin) {
                 currentUser = users[userIndex];
                 document.getElementById('headerName').textContent = name.split(' ')[0];
@@ -1862,7 +1696,6 @@ function saveUser() {
             renderAdminList();
         }
     } else {
-        // Create new
         if (users.find(u => u.pin === pin)) {
             showToast('⛔ PIN вже існує');
             return;
@@ -1871,7 +1704,6 @@ function saveUser() {
         users.push({ pin: pin, name: name, role: selectedRole });
         showToast('✅ Користувача створено!');
         
-        // Clear form
         document.getElementById('userName').value = '';
         document.getElementById('userPin').value = '';
         setRole('admin');
@@ -1902,25 +1734,23 @@ function renderAdminList() {
     
     container.innerHTML = users.map(u => {
         const roleClass = u.role;
-        const roleIcon = u.role === 'admin' ? '🛡️' : u.role === 'editor' ? '✏️' : '👁️';
-        
         return `
             <div class="user-item" onclick="editUser('${u.pin}')">
                 <div class="user-item-info">
                     <div class="user-item-name">${u.name} <span class="edit-hint">✏️ редагувати</span></div>
                     <div class="user-item-pin">PIN: ${u.pin}</div>
                 </div>
-                <span class="user-item-role ${roleClass}">${roleIcon} ${u.role}</span>
+                <span class="user-item-role role-${roleClass}">${u.role}</span>
             </div>
         `;
     }).join('');
 }
 
 function exportData() {
-    let csv = 'ПІБ,Статус,Час останньої зміни\n';
+    let csv = 'ПІБ,Статус,Тривалість поточного статусу\n';
     personnel.forEach(p => {
-        const lastTime = p.currentSessionStart ? new Date(p.currentSessionStart).toLocaleString('uk-UA') : '-';
-        csv += '"' + p.name + '","' + p.statusText + '","' + lastTime + '"\n';
+        const dur = calcDuration(p.since);
+        csv += `"${p.name}","${p.statusText}","${dur}"\n`;
     });
     const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
     const url = URL.createObjectURL(blob);
@@ -1935,16 +1765,9 @@ function logout() {
     currentUser = null;
     selectedPersons.clear();
     
-    const loginScreen = document.getElementById('loginScreen');
-    const mainApp = document.getElementById('mainApp');
-    const toolbar = document.getElementById('toolbar');
-    
-    if (loginScreen) loginScreen.style.display = 'flex';
-    if (mainApp) {
-        mainApp.style.display = 'none';
-        mainApp.classList.remove('active');
-    }
-    if (toolbar) toolbar.classList.remove('visible');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('mainApp').classList.remove('active');
+    document.getElementById('toolbar').classList.remove('visible');
     
     document.querySelectorAll('.tab-btn').forEach((btn, i) => {
         btn.classList.toggle('active', i === 0);
