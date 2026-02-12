@@ -120,11 +120,6 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 24px;
-            text-align: center;
-            font-size: 32px;
-            letter-spacing: 16px;
-            font-weight: 700;
-            color: #333;
             height: 64px;
             display: flex;
             align-items: center;
@@ -132,17 +127,34 @@
             border: 3px solid transparent;
             position: relative;
             z-index: 1;
+            gap: 12px;
+        }
+
+        .pin-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #d1d1d6;
+            transition: all 0.2s ease;
+        }
+
+        .pin-dot.filled {
+            background: var(--primary);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
         }
 
         .pin-display.error {
             border-color: var(--danger);
-            color: var(--danger);
             animation: shake 0.4s;
         }
 
-        .pin-display.success {
-            border-color: var(--success);
-            color: var(--success);
+        .pin-display.error .pin-dot.filled {
+            background: var(--danger);
+        }
+
+        .pin-display.success .pin-dot.filled {
+            background: var(--success);
         }
 
         @keyframes shake {
@@ -785,59 +797,34 @@
             transform: scale(0.98);
         }
 
-        /* Full Modals */
-        .modal-full {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg);
-            z-index: 600;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-            overflow-y: auto;
-        }
-
-        .modal-full.active {
-            transform: translateY(0);
-        }
-
-        .modal-header {
+        /* Admin Tab - Unified Form */
+        .admin-form {
             background: white;
-            padding: 50px 16px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
         }
 
-        .back-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f2f2f7;
-            border: none;
+        .form-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
+            margin-bottom: 16px;
         }
 
-        .modal-title {
-            font-size: 18px;
+        .form-title {
+            font-size: 16px;
             font-weight: 700;
             color: #333;
         }
 
-        .form-section {
-            padding: 20px;
-            background: white;
-            margin-bottom: 12px;
+        .form-mode {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            background: #f0f4ff;
+            padding: 4px 10px;
+            border-radius: 12px;
         }
 
         .form-label {
@@ -845,7 +832,7 @@
             font-weight: 700;
             color: #8e8e93;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: block;
         }
 
@@ -861,18 +848,6 @@
 
         .form-input:focus {
             border-color: var(--primary);
-        }
-
-        .save-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
         }
 
         .role-selector {
@@ -899,6 +874,123 @@
             color: var(--primary);
         }
 
+        .form-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .form-btn.secondary {
+            background: #f2f2f7;
+            color: #333;
+        }
+
+        .form-btn.danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* User List */
+        .user-list {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .user-list-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: #8e8e93;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-item:active {
+            background: #f8f9ff;
+            margin: 0 -16px;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .user-item-info {
+            flex: 1;
+        }
+
+        .user-item-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .user-item-pin {
+            font-size: 12px;
+            color: #8e8e93;
+        }
+
+        .user-item-role {
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .user-item-role.admin {
+            background: #ffebee;
+            color: #e74c3c;
+        }
+
+        .user-item-role.editor {
+            background: #e3f2fd;
+            color: #007aff;
+        }
+
+        .user-item-role.reader {
+            background: #f2f2f7;
+            color: #666;
+        }
+
+        .edit-hint {
+            font-size: 11px;
+            color: var(--primary);
+            margin-left: 8px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .user-item:hover .edit-hint {
+            opacity: 1;
+        }
+
         /* Toast */
         .toast {
             position: fixed;
@@ -920,7 +1012,6 @@
 
         .toast.show {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
         }
 
         .hidden { display: none !important; }
@@ -955,7 +1046,12 @@
         
         <div class="pin-container">
             <div class="water-fill" id="waterFill"></div>
-            <div class="pin-display" id="pinDisplay">••••</div>
+            <div class="pin-display" id="pinDisplay">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
             
             <div class="pin-keypad">
                 <button class="pin-btn" onclick="addPin(1)">1</button>
@@ -1077,56 +1173,44 @@
 
             <!-- Admin Tab -->
             <div class="tab-content" id="tab-admin">
-                <div class="form-section">
-                    <label class="form-label">➕ Новий співробітник</label>
-                    <input type="text" class="form-input" id="newPersonName" placeholder="Прізвище Ім'я По-батькові">
-                    <input type="text" class="form-input" id="newPersonPin" placeholder="PIN (4 цифри)" maxlength="4">
-                    
-                    <label class="form-label">Початковий статус</label>
-                    <div class="status-grid" style="margin-bottom: 16px;">
-                        <div class="status-opt" onclick="selectNewStatus('in', '🏢 В приміщенні')" style="background: #e8f5e9;">
-                            <span class="icon">🏢</span>
-                            <span>В приміщенні</span>
-                        </div>
-                        <div class="status-opt" onclick="selectNewStatus('vz', '📞 ВЗ')" style="background: #e3f2fd;">
-                            <span class="icon">📞</span>
-                            <span>ВЗ</span>
-                        </div>
-                        <div class="status-opt" onclick="selectNewStatus('rz', '📋 РЗ')" style="background: #fff3e0;">
-                            <span class="icon">📋</span>
-                            <span>РЗ</span>
-                        </div>
-                        <div class="status-opt" onclick="selectNewStatus('out', '⚪ Не на роботі')" style="background: #f5f5f5;">
-                            <span class="icon">⚪</span>
-                            <span>Не на роботі</span>
-                        </div>
+                <!-- Unified Form -->
+                <div class="admin-form">
+                    <div class="form-header">
+                        <span class="form-title" id="formTitle">➕ Новий користувач</span>
+                        <span class="form-mode" id="formMode">створення</span>
                     </div>
                     
-                    <button class="save-btn" onclick="addNewPerson()">✅ Додати співробітника</button>
-                </div>
-
-                <div class="form-section">
-                    <label class="form-label">👤 Новий користувач системи</label>
-                    <input type="text" class="form-input" id="adminName" placeholder="ПІБ">
-                    <input type="text" class="form-input" id="adminPin" placeholder="PIN" maxlength="4">
+                    <input type="hidden" id="editingUserPin">
+                    
+                    <label class="form-label">ПІБ</label>
+                    <input type="text" class="form-input" id="userName" placeholder="Прізвище Ім'я По-батькові">
+                    
+                    <label class="form-label">PIN (4 цифри)</label>
+                    <input type="text" class="form-input" id="userPin" placeholder="1234" maxlength="4">
                     
                     <label class="form-label">Роль</label>
                     <div class="role-selector">
-                        <button class="role-btn selected" onclick="setRole('editor')" data-role="editor">✏️ Редактор</button>
+                        <button class="role-btn selected" onclick="setRole('admin')" data-role="admin">🛡️ Адмін</button>
+                        <button class="role-btn" onclick="setRole('editor')" data-role="editor">✏️ Редактор</button>
                         <button class="role-btn" onclick="setRole('reader')" data-role="reader">👁️ Читач</button>
                     </div>
                     
-                    <button class="save-btn" onclick="addAdminUser()" style="background: var(--info);">➕ Додати користувача</button>
+                    <div class="form-actions">
+                        <button class="form-btn primary" onclick="saveUser()" id="saveBtn">➕ Створити</button>
+                        <button class="form-btn secondary hidden" onclick="cancelEdit()" id="cancelBtn">Скасувати</button>
+                        <button class="form-btn danger hidden" onclick="deleteUser()" id="deleteBtn">🗑️ Видалити</button>
+                    </div>
                 </div>
 
-                <div class="form-section">
-                    <label class="form-label">📋 Список користувачів</label>
+                <!-- User List -->
+                <div class="user-list">
+                    <div class="user-list-header">👤 Користувачі системи</div>
                     <div id="adminList"></div>
                 </div>
 
                 <div style="padding: 20px;">
-                    <button class="save-btn" onclick="exportData()" style="background: #333; margin-bottom: 12px;">📊 Експорт CSV</button>
-                    <button class="save-btn" onclick="logout()" style="background: var(--danger);">🚪 Вийти з системи</button>
+                    <button class="form-btn primary" onclick="exportData()" style="width: 100%; margin-bottom: 12px; background: #333;">📊 Експорт CSV</button>
+                    <button class="form-btn danger" onclick="logout()" style="width: 100%;">🚪 Вийти з системи</button>
                 </div>
             </div>
         </div>
@@ -1199,14 +1283,12 @@
 // Data
 let currentUser = null;
 let currentPin = '';
-let selectedRole = 'editor';
+let selectedRole = 'admin';
 let selectedPersons = new Set();
 let sheetTargets = [];
 let sheetStatus = null;
 let sheetText = '';
-let newPersonStatus = 'in';
-let newPersonStatusText = '🏢 В приміщенні';
-let currentTab = 'personnel';
+let editingUser = null;
 
 // 11 Employees
 let users = [
@@ -1240,7 +1322,7 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-// PIN Functions
+// PIN Functions with colored dots
 function addPin(num) {
     if (currentPin.length < 4) {
         currentPin += num;
@@ -1260,8 +1342,10 @@ function clearPin() {
 }
 
 function updatePin() {
-    const disp = document.getElementById('pinDisplay');
-    if (disp) disp.textContent = currentPin.length === 0 ? '••••' : '•'.repeat(currentPin.length) + '•'.repeat(4 - currentPin.length);
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('filled', i < currentPin.length);
+    });
 }
 
 function checkPin() {
@@ -1293,11 +1377,9 @@ function checkPin() {
             if (headerName) headerName.textContent = user.name.split(' ')[0];
             if (headerRole) headerRole.textContent = user.role;
             
-            // Role-based visibility
             if (user.role === 'reader') {
                 if (quickActions) quickActions.style.display = 'none';
                 if (toolbar) toolbar.style.display = 'none';
-                // Switch to stats tab for readers
                 switchTab('stats');
             } else {
                 if (quickActions) quickActions.style.display = 'grid';
@@ -1338,25 +1420,20 @@ function checkPin() {
 
 // Tab Switching
 function switchTab(tab) {
-    currentTab = tab;
-    
-    // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
+        if (btn.textContent.includes(tab === 'personnel' ? 'Персонал' : tab === 'stats' ? 'Статистика' : 'Управління')) {
+            btn.classList.add('active');
+        }
     });
-    event.currentTarget.classList.add('active');
     
-    // Update content
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
     document.getElementById('tab-' + tab).classList.add('active');
-    
-    if (tab === 'stats') renderStats();
-    if (tab === 'admin') renderAdminList();
 }
 
-// Quick Actions - Apply to ALL selected (not just first)
+// Quick Actions
 function applyQuickStatus(status, text) {
     if (!currentUser || currentUser.role === 'reader') {
         showToast('⛔ Немає прав');
@@ -1376,11 +1453,9 @@ function applyQuickStatus(status, text) {
         if (person) changeStatus(person, status, text);
     });
     
-    // Update UI
     updateQuickButtons(status);
     showToast('✅ Оновлено ' + targets.length + ' співробітників');
     
-    // Clear selection after action
     if (selectedPersons.size > 0) {
         clearSelection();
     }
@@ -1453,16 +1528,14 @@ function calcDur(a, b) {
     return m + 'хв';
 }
 
-// Grid Rendering - Tap to select (no checkboxes)
+// Grid Rendering
 function renderGrid() {
     const grid = document.getElementById('personGrid');
-    const sectionTitle = document.querySelector('.section-title span:first-child');
     const hint = document.getElementById('selectionHint');
     
     if (!grid) return;
     grid.innerHTML = '';
     
-    if (sectionTitle) sectionTitle.textContent = 'ПЕРСОНАЛ (' + personnel.length + ')';
     if (hint) hint.classList.toggle('visible', selectedPersons.size > 0);
     
     const isReader = !currentUser || currentUser.role === 'reader';
@@ -1475,20 +1548,11 @@ function renderGrid() {
         const card = document.createElement('div');
         card.className = 'person-card ' + (isSel ? 'selected' : '');
         
-        // Single tap for readers, tap to select for editors
         card.onclick = function(e) {
             if (isReader) return;
-            
-            if (selectedPersons.size === 0 && !isSel) {
-                // First selection - just select
-                toggleSelect(p.id);
-            } else {
-                // Multi-select mode
-                toggleSelect(p.id);
-            }
+            toggleSelect(p.id);
         };
         
-        // Long press or double tap for quick status change when not in selection mode
         card.ondblclick = function(e) {
             if (isReader) return;
             if (selectedPersons.size === 0) {
@@ -1706,52 +1770,7 @@ function applyStatus() {
     clearSelection();
 }
 
-// Admin Functions
-function selectNewStatus(st, txt) {
-    document.querySelectorAll('#addPersonModal .status-opt').forEach(el => el.classList.remove('selected'));
-    if (event && event.currentTarget) event.currentTarget.classList.add('selected');
-    newPersonStatus = st;
-    newPersonStatusText = txt;
-}
-
-function addNewPerson() {
-    const nameEl = document.getElementById('newPersonName');
-    const pinEl = document.getElementById('newPersonPin');
-    const name = nameEl ? nameEl.value.trim() : '';
-    const pin = pinEl ? pinEl.value.trim() : '';
-    
-    if (!name || pin.length !== 4) {
-        showToast('⛔ Заповніть всі поля');
-        return;
-    }
-    
-    if (users.find(u => u.pin === pin)) {
-        showToast('⛔ PIN зайнятий');
-        return;
-    }
-    
-    const now = new Date().toISOString();
-    
-    personnel.push({
-        id: Date.now(),
-        name: name,
-        status: newPersonStatus,
-        statusText: newPersonStatusText,
-        currentSessionStart: now,
-        history: [{status: newPersonStatus, text: newPersonStatusText, start: now, end: null}]
-    });
-    
-    users.push({pin: pin, name: name, role: 'reader'});
-    
-    if (nameEl) nameEl.value = '';
-    if (pinEl) pinEl.value = '';
-    
-    renderGrid();
-    updateStats();
-    renderStats();
-    showToast('✅ Співробітника додано!');
-}
-
+// Unified Admin Form
 function setRole(r) {
     selectedRole = r;
     document.querySelectorAll('.role-btn').forEach(btn => {
@@ -1761,52 +1780,140 @@ function setRole(r) {
     if (btn) btn.classList.add('selected');
 }
 
-function addAdminUser() {
-    const nameEl = document.getElementById('adminName');
-    const pinEl = document.getElementById('adminPin');
-    const n = nameEl ? nameEl.value.trim() : '';
-    const p = pinEl ? pinEl.value.trim() : '';
+function editUser(pin) {
+    const user = users.find(u => u.pin === pin);
+    if (!user) return;
     
-    if (!n || p.length !== 4) {
-        showToast('⛔ Заповніть поля');
+    editingUser = user;
+    
+    // Fill form
+    document.getElementById('userName').value = user.name;
+    document.getElementById('userPin').value = user.pin;
+    document.getElementById('editingUserPin').value = user.pin;
+    
+    // Set role
+    setRole(user.role);
+    
+    // Update UI
+    document.getElementById('formTitle').textContent = '✏️ Редагування';
+    document.getElementById('formMode').textContent = 'редагування';
+    document.getElementById('saveBtn').textContent = '💾 Зберегти';
+    document.getElementById('cancelBtn').classList.remove('hidden');
+    
+    // Show delete button only if not current user
+    const deleteBtn = document.getElementById('deleteBtn');
+    if (user.pin === currentUser.pin) {
+        deleteBtn.classList.add('hidden');
+    } else {
+        deleteBtn.classList.remove('hidden');
+    }
+    
+    showToast('✏️ Режим редагування');
+}
+
+function cancelEdit() {
+    editingUser = null;
+    
+    // Clear form
+    document.getElementById('userName').value = '';
+    document.getElementById('userPin').value = '';
+    document.getElementById('editingUserPin').value = '';
+    
+    // Reset UI
+    document.getElementById('formTitle').textContent = '➕ Новий користувач';
+    document.getElementById('formMode').textContent = 'створення';
+    document.getElementById('saveBtn').textContent = '➕ Створити';
+    document.getElementById('cancelBtn').classList.add('hidden');
+    document.getElementById('deleteBtn').classList.add('hidden');
+    
+    setRole('admin');
+}
+
+function saveUser() {
+    const name = document.getElementById('userName').value.trim();
+    const pin = document.getElementById('userPin').value.trim();
+    const oldPin = document.getElementById('editingUserPin').value;
+    
+    if (!name || pin.length !== 4) {
+        showToast('⛔ Заповніть всі поля коректно');
         return;
     }
-    if (users.find(u => u.pin === p)) {
-        showToast('⛔ PIN зайнятий');
+    
+    if (editingUser) {
+        // Update existing
+        if (pin !== oldPin && users.find(u => u.pin === pin)) {
+            showToast('⛔ Новий PIN вже зайнятий');
+            return;
+        }
+        
+        const userIndex = users.findIndex(u => u.pin === oldPin);
+        if (userIndex !== -1) {
+            users[userIndex] = { pin: pin, name: name, role: selectedRole };
+            
+            // Update current user if editing self
+            if (currentUser.pin === oldPin) {
+                currentUser = users[userIndex];
+                document.getElementById('headerName').textContent = name.split(' ')[0];
+                document.getElementById('headerRole').textContent = selectedRole;
+            }
+            
+            showToast('✅ Зміни збережено!');
+            cancelEdit();
+            renderAdminList();
+        }
+    } else {
+        // Create new
+        if (users.find(u => u.pin === pin)) {
+            showToast('⛔ PIN вже існує');
+            return;
+        }
+        
+        users.push({ pin: pin, name: name, role: selectedRole });
+        showToast('✅ Користувача створено!');
+        
+        // Clear form
+        document.getElementById('userName').value = '';
+        document.getElementById('userPin').value = '';
+        setRole('admin');
+        
+        renderAdminList();
+    }
+}
+
+function deleteUser() {
+    if (!editingUser) return;
+    
+    if (editingUser.pin === currentUser.pin) {
+        showToast('⛔ Не можна видалити себе');
         return;
     }
     
-    users.push({pin:p, name:n, role:selectedRole});
-    
-    if (nameEl) nameEl.value = '';
-    if (pinEl) pinEl.value = '';
-    
-    renderAdminList();
-    showToast('✅ Користувача додано!');
+    if (confirm('Видалити користувача ' + editingUser.name + '?')) {
+        users = users.filter(u => u.pin !== editingUser.pin);
+        showToast('🗑️ Видалено');
+        cancelEdit();
+        renderAdminList();
+    }
 }
 
 function renderAdminList() {
-    const c = document.getElementById('adminList');
-    if (!c) return;
+    const container = document.getElementById('adminList');
+    if (!container) return;
     
-    c.innerHTML = '';
-    
-    users.forEach(u => {
-        const d = document.createElement('div');
-        d.style.cssText = 'display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0;';
+    container.innerHTML = users.map(u => {
+        const roleClass = u.role;
+        const roleIcon = u.role === 'admin' ? '🛡️' : u.role === 'editor' ? '✏️' : '👁️';
         
-        const color = u.role === 'admin' ? '#e74c3c' : u.role === 'editor' ? '#007aff' : '#666';
-        const bg = u.role === 'admin' ? '#ffebee' : u.role === 'editor' ? '#e3f2fd' : '#f2f2f7';
-        
-        d.innerHTML = 
-            '<div>' +
-                '<div style="font-weight:600;font-size:15px;color:#333;">' + u.name + '</div>' +
-                '<div style="font-size:12px;color:#8e8e93;">PIN: ' + u.pin + '</div>' +
-            '</div>' +
-            '<span style="font-size:11px;padding:6px 12px;border-radius:12px;background:' + bg + ';color:' + color + ';font-weight:600;text-transform:uppercase;">' + u.role + '</span>';
-        
-        c.appendChild(d);
-    });
+        return `
+            <div class="user-item" onclick="editUser('${u.pin}')">
+                <div class="user-item-info">
+                    <div class="user-item-name">${u.name} <span class="edit-hint">✏️ редагувати</span></div>
+                    <div class="user-item-pin">PIN: ${u.pin}</div>
+                </div>
+                <span class="user-item-role ${roleClass}">${roleIcon} ${u.role}</span>
+            </div>
+        `;
+    }).join('');
 }
 
 function exportData() {
@@ -1839,13 +1946,14 @@ function logout() {
     }
     if (toolbar) toolbar.classList.remove('visible');
     
-    // Reset tabs
     document.querySelectorAll('.tab-btn').forEach((btn, i) => {
         btn.classList.toggle('active', i === 0);
     });
     document.querySelectorAll('.tab-content').forEach((content, i) => {
         content.classList.toggle('active', i === 0);
     });
+    
+    cancelEdit();
     
     currentPin = '';
     updatePin();
